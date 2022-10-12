@@ -4,11 +4,12 @@ import random
 from ccn_model import CNN
 from classifier import classifier
 import torch
-
-
+import dba
 from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
@@ -18,7 +19,7 @@ def home():
 
 @app.route('/stock')
 def stock():
-    return "Retrieve last stock from DB"
+    return flask.jsonify(dba.get_last_stock())
 
 
 @app.route('/demo', methods=['GET'])
@@ -41,6 +42,7 @@ def demo():
         else:
             print(image_file)
             response.append({'type': dir_type, 'status': 'out of stock', 'image': 'error'})
+    dba.insert_stock_type_status(response)
 
     return flask.jsonify(response)
 

@@ -1,6 +1,5 @@
 import torchvision.transforms as transforms
 import hyperparameters as hyper
-from PIL import Image
 from skimage.io import imread
 
 
